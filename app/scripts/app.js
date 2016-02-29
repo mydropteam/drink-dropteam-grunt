@@ -2,14 +2,26 @@
 
 
     $(document).ready(function() {
-        console.log('ok ok ?');
-        $('.prompt-link').click(function() {
-            console.log('clicked ');
+        $('.prompt-link').on('click', onPromptLinkClicked);
+
+        function onPromptLinkClicked() {
+
+            console.log('prompt-link clicked');
             var command = $(this).attr('data-prompt');
-            console.log('Command : ' + command);
+
+            var clear = true;
+            if (typeof $(this).attr('data-prompt-clear') !== "undefined") {
+                if ($(this).attr('data-prompt-clear').length > 0 && $(this).attr('data-prompt-clear') == "false") {
+                    clear = false;
+                }
+            }
+
+            if (clear == true && $('#start .console p').html().length > 0) {
+                $('#start .console-inner').html('<p></p>');
+            }
 
             if (command == 'grunt-cli') {
-                $('#start .console p').writeText('npm install -g grunt-cli', function() {
+                $('#start .console p').writeText('npm install -g grunt-cli', 100, function() {
                     $('#start .console p').append('<br/>');
                     $('#start .console p').append('npm <span class="green">http</span> <span class="purple">GET</span> https://registry.npmjs.org/grunt-cli <br/>');
                     $('#start .console p').append('npm <span class="green">http</span> <span class="purple">304</span> https://registry.npmjs.org/grunt-cli <br/>');
@@ -27,9 +39,101 @@
                 });
             }
 
-            if (command == "grunt-init") {
-
+            if (command == "grunt-init-install") {
+                $('#start .console p').writeText('npm install -g grunt-init', 100, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('/usr/local/bin/grunt-init -> /usr/local/lib/node_modules/grunt-init/bin/grunt-init <br/>');
+                    $('#start .console p').append('grunt-init@0.3.2 /usr/local/lib/node_modules/grunt-init <br/>');
+                    $('#start .console p').append('├── semver@1.0.14 <br/>');
+                    $('#start .console p').append('├── colors@0.6.2 <br/>');
+                    $('#start .console p').append('├── async@0.2.10 <br/>');
+                    $('#start .console p').append('├── hooker@0.2.3 <br/>');
+                    $('#start .console p').append('├── lodash@2.4.2 <br/>');
+                    $('#start .console p').append('├── grunt@0.4.5 (which@1.0.9, dateformat@1.0.2-1.2.3, eventemitter2@0.4.14, getobject@0.1.0, rimraf@2.2.8, async@0.1.22, grunt-legacy-util@0.2.0, exit@0.1.2, nopt@1.0.10, minimatch@0.2.14, glob@3.1.21, lodash@0.9.2, coffee-script@1.3.3, underscore.string@2.2.1, iconv-lite@0.2.11, findup-sync@0.1.3, js-yaml@2.0.5, grunt-legacy-log@0.1.3) <br/>');
+                    $('#start .console p').append('└── prompt@0.1.12 (pkginfo@0.3.1, async@0.1.22, winston@0.5.11) <br/>');
+                });
             }
-        });
+
+            if (command == "grunt-init-tpl") {
+                $('#start .console p').writeText('git clone https://github.com/gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile', 30, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append("Cloning into '/Users/demo/.grunt-init/gruntfile'... <br/>");
+                    $('#start .console p').append("remote: Counting objects: 29, done. <br/>");
+                    $('#start .console p').append("remote: Total 29 (delta 0), reused 0 (delta 0), pack-reused 29 <br/>");
+                    $('#start .console p').append("Unpacking objects: 100% (29/29), done. <br/>");
+                    $('#start .console p').append("Checking connectivity... done <br/>");
+                });
+            }
+
+            if (command == "grunt-init") {
+                $('#start .console p').writeText('grunt-init gruntfile', 30, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('<u>Running "init:gruntfile" (init) task</u><br/>');
+                    $('#start .console p').append('This task will create one or more files in the current directory, based on the<br/>');
+                    $('#start .console p').append('environment and the answers to a few questions. Note that answering "?" to any<br/>');
+                    $('#start .console p').append('question will show question-specific help and answering "none" to most questions will leave its value blank.<br/>');
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('<b>"gruntfile" template notes:</b><br/>');
+                    $('#start .console p').append('This template tries to guess file and directory paths, but you will most likely<br/>');
+                    $('#start .console p').append('need to edit the generated Gruntfile.js file before running grunt. <u>If you run</u><br/>');
+                    $('#start .console p').append('<u>grunt after generating the Gruntfile, and it exits with errors, edit the file!</u><br/>');
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('<b>Please answer the following:</b><br/>');
+                    $('#start .console p').append('[?] Is the DOM involved in ANY way? (<span data-prompt="grunt-init-q1" data-prompt-clear="false" class="prompt-link grunt-init-q1">Y/n</span>) <span class="grunt-init-q1-r"></span>');
+                    $('.grunt-init-q1').on('click', onPromptLinkClicked);
+                });
+            }
+            if (command == "grunt-init-q1") {
+                $('.grunt-init-q1-r').writeText('Y', 110, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('[?] Will files be concatenated or minified? (<span data-prompt="grunt-init-q2" data-prompt-clear="false" class="prompt-link grunt-init-q2">Y/n</span>) <span class="grunt-init-q2-r"></span>');
+                    $('.grunt-init-q2').on('click', onPromptLinkClicked);
+
+                    var scroll = $('#start .console-inner');
+                    var scrollTo = scroll[0].scrollHeight;
+                    scroll.scrollTop(scrollTo);
+                });
+            }
+            if (command == "grunt-init-q2") {
+                $('.grunt-init-q2-r').writeText('Y', 110, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('[?] Will you have a package.json file? (<span data-prompt="grunt-init-q3" data-prompt-clear="false" class="prompt-link grunt-init-q3">Y/n</span>) <span class="grunt-init-q3-r"></span>');
+                    $('.grunt-init-q3').on('click', onPromptLinkClicked);
+
+                    var scroll = $('#start .console-inner');
+                    var scrollTo = scroll[0].scrollHeight;
+                    scroll.scrollTop(scrollTo);
+                });
+            }
+            if (command == "grunt-init-q3") {
+                $('.grunt-init-q3-r').writeText('Y', 110, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('[?] <span class="green">Do you need to make any changes to the above before continuing?</span> (<span data-prompt="grunt-init-q4" data-prompt-clear="false" class="prompt-link grunt-init-q4">y/N</span>) <span class="grunt-init-q4-r"></span>');
+                    $('.grunt-init-q4').on('click', onPromptLinkClicked);
+
+                    var scroll = $('#start .console-inner');
+                    var scrollTo = scroll[0].scrollHeight;
+                    scroll.scrollTop(scrollTo);
+                });
+            }
+            if (command == "grunt-init-q4") {
+                $('.grunt-init-q4-r').writeText('N', 110, function() {
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('Writing Gruntfile.js...<span class="green">OK</span><br/>');
+                    $('#start .console p').append('Writing package.json...<span class="green">OK</span><br/>');
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('<b>Initialized from template "gruntfile".</b><br/>');
+                    $('#start .console p').append('<br/>');
+                    $('#start .console p').append('<span class="green">Done, without errors.</span><br/>');
+                    $('#start .console p').after('<p></p>');
+
+                    var scroll = $('#start .console-inner');
+                    var scrollTo = scroll[0].scrollHeight;
+                    scroll.scrollTop(scrollTo);
+                });
+            }
+
+
+        }
     });
 })(jQuery);

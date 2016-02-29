@@ -387,12 +387,19 @@ section {
 .console {
     background: url(../images/MacBook-Pro-mockup.png) no-repeat left center;
     height: 448px;
+    padding-top: 25px;
     position: relative;
 
     .console-inner {
         padding: 30px 85px 30px 95px;
         text-align: left;
         font-family: "Lucida Console";
+        max-height: 390px;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         p {
             font-size: 12px;

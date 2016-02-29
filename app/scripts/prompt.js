@@ -1,5 +1,5 @@
 (function($) {
-    $.fn.writeText = function(content, callback) {
+    $.fn.writeText = function(content, speed, callback) {
         var contentArray = content.split(""),
             current = 0,
             elem = this;
@@ -11,7 +11,7 @@
                 callback();
                 clearInterval(timer);
             }
-        }, 70);
+        }, speed);
     };
 
 })(jQuery);
