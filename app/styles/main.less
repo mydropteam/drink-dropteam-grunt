@@ -147,7 +147,7 @@ a {
     padding: 100px 0;
     text-align: center;
     color: @light;
-    background: url(../images/intro-bg.jpg) no-repeat bottom center scroll;
+    background: url(../images/Arrière-plan.png) no-repeat bottom center scroll;
     background-color: @dark;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -383,6 +383,39 @@ section {
         margin-top: 40%;
     }
 }
+#gruntfile {
+    .page-scroll {
+        float: right;
+    }
+}
+
+#start {
+    ol {
+        text-align: left;
+    }
+
+    .page-scroll {
+        float: right;
+        margin-top: 150px;
+    }
+}
+
+#plugins {
+    .icon {
+        float: left;
+        margin-left: 5px;
+    }
+    
+    #plugin-sprite {
+        display: none;
+    }
+    #plugin-jshint {
+        display: none;
+    }
+    #plugin-svg {
+        display: none;
+    }
+}
 
 .console {
     background: url(../images/MacBook-Pro-mockup.png) no-repeat left center;
@@ -391,10 +424,10 @@ section {
     position: relative;
 
     .console-inner {
-        padding: 30px 85px 30px 95px;
+        padding: 0px 85px 30px 95px;
         text-align: left;
         font-family: "Lucida Console";
-        max-height: 390px;
+        max-height: 365px;
         overflow: auto;
 
         &::-webkit-scrollbar {

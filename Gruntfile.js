@@ -260,6 +260,22 @@ module.exports = function (grunt) {
         'svgmin',
         'htmlmin'
       ]
+    },
+    sprite:{
+      all: {
+        src: 'app/sprites/*.png',
+        dest: 'app/images/spritesheet.png',
+        destCss: 'app/styles/sprites.css'
+      }
+    },
+    svg2png: {
+      all: {
+        // specify files in array format with multiple src-dest mapping
+        files: [
+          // rasterize all SVG files in "img" and its subdirectories to "img/png"
+          { cwd: 'app/', src: ['svgs/*.svg'], dest: 'app/images' }
+        ]
+      }
     }
   });
 
@@ -272,6 +288,8 @@ module.exports = function (grunt) {
       'clean:server',
       'coffee',
       'less',
+      'sprite',
+      'svg2png',
       'copy:server',
       'connect:livereload',
       'watch'
@@ -310,4 +328,8 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('hint', [
+    'jshint'
+  ])
 };
